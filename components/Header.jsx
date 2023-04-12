@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import logo from "../public/images/logo.png";
+import logo from "../public/static/images/logo.png";
 import Image from "next/image";
 import Link from "next/link";
 import { GoChevronDown, GoChevronUp } from "react-icons/go";
