@@ -266,9 +266,11 @@ const Profile = () => {
             </DrawerBody>
           </DrawerContent>
         </Drawer>
-        <div className="flex lg:hidden mx-auto my-auto justify-center items-center font-bold">
-          Welcome to Notion Clone web app made by Anand Pandey
-        </div>
+        {!showTasks && !selectedPage && (
+          <div className="flex lg:hidden mx-auto my-auto justify-center items-center font-bold">
+            Welcome to Notion Clone web app made by Anand Pandey
+          </div>
+        )}
         <div className="hidden lg:block w-64 border-2 border-sold bg-gray-50 h-full text-sm z-10 pl-4 py-2  overflow-auto">
           <div className="relative px-2 w-full ">
             <button
