@@ -32,7 +32,9 @@ const Profile = () => {
   const [showTasks, setShowTasks] = useState(false);
   const { data: session } = useSession();
   const [todoItems, setTodoItems] = useState([]);
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [isOpen, setIsOpen] = useState(true);
+
+  const onClose = () => setIsOpen(false);
 
   const [pages, setPages] = useState([]);
   const [selectedPage, setSelectedPage] = useState(null);
