@@ -32,20 +32,18 @@ const Profile = () => {
   const [showTasks, setShowTasks] = useState(false);
   const { data: session } = useSession();
   const [todoItems, setTodoItems] = useState([]);
-  const [isOpen, setIsOpen] = useState(true);
-
-  const onClose = () => setIsOpen(false);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [pages, setPages] = useState([]);
   const [selectedPage, setSelectedPage] = useState(null);
 
   const router = useRouter();
 
-  useEffect(() => {
-    if (!session) {
-      router.push("/login");
-    }
-  }, [router, session]);
+  // useEffect(() => {
+  //   if (!session) {
+  //     router.push("/login");
+  //   }
+  // }, [router, session]);
 
   const signOutHandler = async () => {
     await router.push("/");
