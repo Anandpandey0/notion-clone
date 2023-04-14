@@ -383,7 +383,7 @@ const Profile = () => {
               <TiTick />
               Task List
             </h1>
-            <div className="lg:mt-24 lg:ml-24  h-screen  w-full p-2">
+            <div className="lg:mt-24 lg:ml-24  h-screen w-[2/3] lg:w-[40vw] p-2">
               <h1 className="font-bold text-4xl flex items-center">
                 {" "}
                 <TiTick />
