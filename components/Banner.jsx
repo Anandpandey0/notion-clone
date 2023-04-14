@@ -7,11 +7,16 @@ const Banner = () => {
   return (
     <>
       <div className=" h-[50vh]  relative  w-full  flex items-center justify-center  z-[-10] ">
-        <Image src={banner} alt="" fill className="object-contain z-[-10]" />
+        <Image
+          src="https://raw.githubusercontent.com/Anandpandey0/portfolio-images/main/notion-clone/banner.PNG"
+          alt=""
+          fill
+          className="object-contain z-[-10]"
+        />
       </div>
       <div className=" h-[50vh]   relative  w-full  flex items-center justify-center z-[-10] ">
         <Image
-          src={banner2}
+          src="https://raw.githubusercontent.com/Anandpandey0/portfolio-images/main/notion-clone/banner-2.PNG"
           alt=""
           fill
           className="object-contain z-[-10] mt-[-160px] sm:mt-0"

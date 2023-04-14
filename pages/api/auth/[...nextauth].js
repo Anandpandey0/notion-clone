@@ -37,10 +37,14 @@ export default NextAuth({
     // },
     async signIn(user, account, profile) {
       let userObj = null;
+      await connectDb();
 
       // Check if user already exists in the database
       try {
-        userObj = await User.findOne({ email: user.user.email });
+        // console.log(user.user.email);
+        userObj = await User.findOne({ email: user.user.email }, null, {
+          maxTimeMS: 50000,
+        });
       } catch (error) {
         console.error("Error finding user:", error);
         return false;

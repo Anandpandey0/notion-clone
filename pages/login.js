@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
-import logo from "../public/images/logo.png";
+import logo from "../public/static/images/logo.png";
 
 import { useRouter } from "next/router";
 

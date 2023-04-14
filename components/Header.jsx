@@ -38,8 +38,12 @@ const Header = () => {
     <>
       <nav className=" text-sm lg:text-lg flex items-center h-fit   justify-between font-semibold">
         <div className="flex items-center ">
-          <div className="flex items-center w-32 h-20 z-100  ">
-            <Image src={logo} alt="logo" />
+          <div className="flex items-center w-32 h-20 z-100 relative cursor-pointer ">
+            <Image
+              src="https://raw.githubusercontent.com/Anandpandey0/portfolio-images/main/notion-clone/logo.png"
+              alt="logo"
+              fill
+            />
           </div>
           <div className="hidden  xl:flex gap-4 w-1/3 z-100">
             <div className="relative group z-100">
