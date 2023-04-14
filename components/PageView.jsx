@@ -35,14 +35,14 @@ const PageView = ({ selectedPage, onUpdatePageTitle, onUpdatePageContent }) => {
 
   return (
     <div className="cursor-pointer w-full h-full  overflow-y-auto ">
-      <div className="pt-24  w-2/3 mx-auto h-full  ">
+      <div className="pt-24  flex justify-center items-center mx-auto flex-col w-5/6  lg:w-2/3 lg:mx-auto h-full ">
         <input
           type="text"
           value={newTitle}
           onChange={handleTitleChange}
           placeholder="Untitled"
           onBlur={handleTitleBlur}
-          className=" w-full bg-gray-200 outline-none border-2 border-solid text-[60px] p-2"
+          className=" w-full bg-gray-200 outline-none border-2 border-solid text-[60px] px-4"
         />
         <textarea
           value={newContent}

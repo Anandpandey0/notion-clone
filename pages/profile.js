@@ -152,7 +152,7 @@ const Profile = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="flex h-screen">
-        <div className="h-fit w-fit p-2">
+        <div className="h-fit w-fit p-1">
           <button
             className="lg:hidden  hover:bg-gray-200 rounded-full p-2"
             onClick={onOpen}
@@ -369,7 +369,7 @@ const Profile = () => {
           </div>{" "}
         </div>{" "}
         {selectedPage && (
-          <div className=" h-screen overflow-y-auto w-[80%] ml-auto">
+          <div className=" h-screen overflow-y-auto w-full lg:ml-auto">
             <PageView
               selectedPage={selectedPage}
               onUpdatePageTitle={handleUpdatePageTitle}
@@ -378,12 +378,12 @@ const Profile = () => {
           </div>
         )}
         {showTasks && (
-          <div className=" h-screen overflow-y-auto w-[80%] ml-auto">
-            <h1 className="flex items-center ">
+          <div className=" h-screen overflow-y-auto w-full lg:ml-auto">
+            <h1 className="flex items-center  p-2">
               <TiTick />
               Task List
             </h1>
-            <div className="mt-24 ml-24  h-screen  w-[50vw]">
+            <div className="lg:mt-24 lg:ml-24  h-screen  w-full p-2">
               <h1 className="font-bold text-4xl flex items-center">
                 {" "}
                 <TiTick />
