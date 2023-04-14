@@ -17,11 +17,22 @@ import TodoItem from "../components/TodoItem";
 import { HiOutlineDocumentText } from "react-icons/hi";
 import PageView from "../components/PageView";
 import { MdDeleteOutline } from "react-icons/md";
+import MobileViewProfile from "../components/MobileViewProfile";
+import { BiMenu } from "react-icons/bi";
+import {
+  Drawer,
+  DrawerBody,
+  DrawerContent,
+  DrawerHeader,
+  DrawerOverlay,
+  useDisclosure,
+} from "@chakra-ui/react";
 const Profile = () => {
   const [showProfile, setShowProfile] = useState(false);
   const [showTasks, setShowTasks] = useState(false);
   const { data: session } = useSession();
   const [todoItems, setTodoItems] = useState([]);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [pages, setPages] = useState([]);
   const [selectedPage, setSelectedPage] = useState(null);
@@ -109,10 +120,12 @@ const Profile = () => {
   };
   const handleClick = (id, title, content) => {
     setShowTasks(false);
+    onClose();
     setSelectedPage({ id, title, content });
   };
 
   const showTasksHandler = () => {
+    onClose();
     setSelectedPage(null);
     setShowTasks(true);
   };
@@ -139,7 +152,121 @@ const Profile = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="flex h-screen">
-        <div className="w-64 border-2 border-sold bg-gray-50 h-full text-sm z-10 pl-4 py-2  overflow-auto">
+        <div className="h-fit w-fit p-2">
+          <button
+            className="lg:hidden  hover:bg-gray-200 rounded-full p-2"
+            onClick={onOpen}
+          >
+            <BiMenu size="1.5rem" />
+          </button>
+        </div>
+        <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
+          <DrawerOverlay />
+          <DrawerContent>
+            <DrawerHeader borderBottomWidth="1px">
+              <button
+                className="flex py-4 px-2 w-full gap-2 hover:bg-gray-100 items-center"
+                onClick={() => setShowProfile(true)}
+              >
+                <div className="h-6 w-6 ">
+                  {session && (
+                    <Image
+                      src={session && session.user.image}
+                      alt=""
+                      width={24}
+                      height={24}
+                    />
+                  )}
+                </div>
+                <div>{session && session.user.name} &apos;s ....</div>
+                <CgArrowsV className="ml-auto" />
+              </button>
+              {showProfile && (
+                <div className="bg-gray-50 z-100 absolute top-10 left-8 w-64 h-64 border-2 border-solid text-[12px] p-2 text-gray-400">
+                  <h1>{session ? session.user.name : "Hello"}</h1>
+                  <div className="  w-full  my-4 hover:bg-gray-100 ">
+                    <div className="flex  items-center w-full py-2 cursor-pointer">
+                      {" "}
+                      {session && (
+                        <Image
+                          src={session.user.image}
+                          alt=""
+                          width={36}
+                          height={36}
+                        />
+                      )}
+                      <div className="ml-4 text-base ">
+                        {session ? session.user.name : "Hello"}
+                      </div>
+                      <TiTick size="1.5rem" className="ml-auto" />
+                    </div>
+                  </div>
+                  <button
+                    className="text-[12px] w-full text-left pl-2 hover:bg-gray-100 py-2"
+                    onClick={signOutHandler}
+                  >
+                    Log out
+                  </button>
+                </div>
+              )}
+            </DrawerHeader>
+            <DrawerBody>
+              <>
+                <div className="px-2">
+                  <button className="flex py-2 px-2 hover:bg-gray-100 w-full items-center gap-4 font-semibold">
+                    <AiOutlineSearch />
+                    Search
+                  </button>
+                  <button className="flex py-2 px-2 hover:bg-gray-100 w-full items-center gap-4 font-semibold">
+                    <TbClockHour9 />
+                    Updates
+                  </button>
+                  <button className="flex py-2 px-2 hover:bg-gray-100 w-full items-center gap-4 font-semibold">
+                    <FiSettings />
+                    Settings & members
+                  </button>
+                  {/* {console.log(initialItems)} */}
+
+                  <button
+                    className="flex py-2 px-2 hover:bg-gray-100 w-full items-center gap-4 font-semibold"
+                    onClick={handleAddPage}
+                  >
+                    <FiPlus />
+                    Add a page
+                  </button>
+
+                  <button
+                    className="flex py-2 px-2 hover:bg-gray-100 w-full items-center gap-4 font-semibold"
+                    onClick={showTasksHandler}
+                  >
+                    <FiPlus />
+                    Tasks
+                  </button>
+
+                  {pages.map((page) => (
+                    <div
+                      key={page.id}
+                      className="py-2 px-2 hover:bg-gray-100 w-full items-center gap-4 font-semibold flex cursor-pointer"
+                      onClick={() =>
+                        handleClick(page.id, page.title, page.content)
+                      }
+                    >
+                      <HiOutlineDocumentText />
+                      {page.title}
+                      <button
+                        className="ml-auto p-2 h-full hover:bg-gray-400 "
+                        onClick={() => handleDeletePage(page.id)}
+                      >
+                        <MdDeleteOutline />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </>
+            </DrawerBody>
+          </DrawerContent>
+        </Drawer>
+        <div className="hidden lg:block w-64 border-2 border-sold bg-gray-50 h-full text-sm z-10 pl-4 py-2  overflow-auto">
           <div className="relative px-2 w-full ">
             <button
               className="flex py-4 px-2 w-full gap-2 hover:bg-gray-100 items-center"
@@ -160,7 +287,7 @@ const Profile = () => {
             </button>
             {showProfile && (
               <div className="bg-gray-50 z-100 absolute top-10 left-8 w-64 h-64 border-2 border-solid text-[12px] p-2 text-gray-400">
-                <h1>{session.user.email}</h1>
+                <h1>{session ? session.user.name : "Hello"}</h1>
                 <div className="  w-full  my-4 hover:bg-gray-100 ">
                   <div className="flex  items-center w-full py-2 cursor-pointer">
                     {" "}
@@ -172,7 +299,9 @@ const Profile = () => {
                         height={36}
                       />
                     )}
-                    <div className="ml-4 text-base ">{session.user.name}</div>
+                    <div className="ml-4 text-base ">
+                      {session ? session.user.name : "Hello"}
+                    </div>
                     <TiTick size="1.5rem" className="ml-auto" />
                   </div>
                 </div>
