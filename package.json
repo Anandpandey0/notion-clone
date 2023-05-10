@@ -13,6 +13,7 @@
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@next-auth/mongodb-adapter": "^1.1.1",
+    "@vercel/analytics": "^1.0.1",
     "framer-motion": "^10.10.0",
     "mongodb": "^4.1.1",
     "mongoose": "^7.0.3",
