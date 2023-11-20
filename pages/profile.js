@@ -17,7 +17,7 @@ import TodoItem from "../components/TodoItem";
 import { HiOutlineDocumentText } from "react-icons/hi";
 import PageView from "../components/PageView";
 import { MdDeleteOutline } from "react-icons/md";
-import MobileViewProfile from "../components/MobileViewProfile";
+
 import { BiMenu } from "react-icons/bi";
 import {
   Drawer,
@@ -27,6 +27,7 @@ import {
   DrawerOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
+import TaskComponent from "../components/TaskComponent";
 const Profile = () => {
   const [showProfile, setShowProfile] = useState(false);
   const [showTasks, setShowTasks] = useState(false);
@@ -39,27 +40,20 @@ const Profile = () => {
 
   const router = useRouter();
 
-  // useEffect(() => {
-  //   if (!session) {
-  //     router.push("/login");
-  //   }
-  // }, [router, session]);
-
   const signOutHandler = async () => {
-    await router.push("/");
-    signOut();
+    await signOut();
+    router.push("/");
   };
-  useEffect(() => {
-    if (session) {
-      if (todoItems.length > 0) {
-        const saveTodo = async () => {
-          await saveTodoItems(session.user.email, todoItems);
-          localStorage.setItem("taskDB", JSON.stringify(todoItems));
-        };
-        saveTodo();
-      }
+
+  const saveTodo = async (updatedTodoItems) => {
+    if (session && todoItems.length > 0) {
+      await saveTodoItems(session.user.email, updatedTodoItems);
+
+      // console.log(todoItems);
+      localStorage.setItem("taskDB", JSON.stringify(updatedTodoItems));
     }
-  }, [todoItems, session]);
+  };
+
   useEffect(() => {
     if (session) {
       const savePages = async () => {
@@ -83,18 +77,23 @@ const Profile = () => {
   }, [showProfile]);
   const handleAddTodo = async () => {
     const newTodo = { id: todoItems.length + 1, title: "Untitled" };
-    setTodoItems([...todoItems, newTodo]);
+    console.log(newTodo);
+    const updatedTodoItems = [...todoItems, newTodo];
+    setTodoItems(updatedTodoItems);
+    saveTodo(updatedTodoItems);
   };
 
   const handleDeleteTodo = (id) => {
     const updatedTodoItems = todoItems.filter((todo) => todo.id !== id);
     setTodoItems(updatedTodoItems);
+    saveTodo(updatedTodoItems);
   };
   const handleUpdateTitle = (id, title) => {
     const updatedTodoItems = todoItems.map((todo) =>
       todo.id === id ? { ...todo, title } : todo
     );
     setTodoItems(updatedTodoItems);
+    saveTodo(updatedTodoItems);
   };
   const handleAddPage = () => {
     const newPage = { id: pages.length + 1, title: "Untitled", content: "" };
@@ -131,11 +130,11 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    const savedTaskData = localStorage.getItem("taskDB");
-    if (savedTaskData) {
-      const data = JSON.parse(savedTaskData);
-      setTodoItems(data);
-    }
+    // const savedTaskData = localStorage.getItem("taskDB");
+    // if (savedTaskData) {
+    //   const data = JSON.parse(savedTaskData);
+    //   setTodoItems(data);
+    // }
     const savedPageData = localStorage.getItem("PageDb");
     if (savedPageData) {
       const data = JSON.parse(savedPageData);
@@ -377,7 +376,7 @@ const Profile = () => {
             />
           </div>
         )}
-        {showTasks && (
+        {/* {showTasks && (
           <div className=" h-screen overflow-y-auto w-full lg:ml-auto">
             <h1 className="flex items-center  p-2">
               <TiTick />
@@ -431,7 +430,8 @@ const Profile = () => {
               </div>
             </div>
           </div>
-        )}
+        )} */}
+        {showTasks && <TaskComponent />}
         {/* {console.log(pages)} */}
       </div>
     </>

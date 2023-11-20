@@ -12,16 +12,20 @@ const TodoItem = ({ id, title, onDelete, onUpdateTitle }) => {
   };
 
   const handleEdit = () => {
+    // console.log("Editing");
     setIsEditing(true);
   };
 
   const handleTitleChange = (event) => {
+    // console.log("Changed");
     setNewTitle(event.target.value);
   };
 
   const handleTitleBlur = () => {
     if (newTitle.trim().length > 0 && newTitle !== title) {
+      // console.log(id);
       onUpdateTitle(id, newTitle);
+      // console.log(id);
     } else {
       setNewTitle(title);
     }
@@ -32,6 +36,7 @@ const TodoItem = ({ id, title, onDelete, onUpdateTitle }) => {
       {isEditing ? (
         <div className="flex items-center gap-2">
           <HiOutlineDocumentText />
+          <span className="hidden">{id}</span>
           <input
             type="text"
             value={newTitle}

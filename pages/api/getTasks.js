@@ -3,26 +3,26 @@ import TodoList from "../../models/TaskModel";
 
 export default async function getTasks(req, res) {
   const { userEmail } = req.query;
+  console.log(userEmail);
   if (req.method === "GET") {
     try {
       await connectDb();
-
-      //   const item = await Cart.find({ userEmail: email });
-      // const cart = await db.collection("carts").findOne({ userEmail });
-      const existingTodoList = await TodoList.findOne({ userEmail });
+      const existingTodoList = await TodoList.findOne({ userEmail: userEmail });
+      // console.log(existingTodoList);
       if (existingTodoList) {
-        const data = existingTodoList.items;
-
-        res.status(200).json({ data });
+        // console.log(existingTodoList);
+        const data = await existingTodoList.items;
+        return res.status(200).json(data);
       } else {
-        const data = [{ message: "No Task Items", empty: true }];
-        res.status(400).json({ data });
+        return res
+          .status(400)
+          .json({ message: "No Task Items", empty: true, data: [] });
       }
     } catch (err) {
       console.error(err);
-      res.status(500).json({ message: "Internal server error" });
+      return res.status(500).json({ message: "Internal server error" });
     }
   } else {
-    res.status(405).json({ message: "Method not allowed" });
+    return res.status(405).json({ message: "Method not allowed" });
   }
 }

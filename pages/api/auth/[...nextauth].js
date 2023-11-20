@@ -13,28 +13,6 @@ export default NextAuth({
   ],
   secret: process.env.JWT_SECRET,
   callbacks: {
-    //   async signIn(user, account, profile) {
-    //     try {
-    //       await client.connect();
-    //       const db = client.db(dbName);
-    //       const collection = db.collection("users");
-
-    //       const result = await collection.findOneAndUpdate(
-    //         { email: user.user.email },
-    //         { $set: { email: user.user.email, name: user.user.name } },
-    //         { upsert: true, returnOriginal: false }
-    //       );
-    //       // console.log(profile);
-    //       if (!result.ok) {
-    //         throw new Error("Failed to update user credentials");
-    //       }
-    //     } catch (error) {
-    //       console.error(error);
-    //       return false;
-    //     }
-    //     return true;
-    //   },
-    // },
     async signIn(user, account, profile) {
       let userObj = null;
       await connectDb();
